@@ -5,8 +5,15 @@ import store from './store'
 
 import { connection } from './database'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faChevronLeft, faHome } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 import 'bulma-rtl/css/bulma-rtl.css'
 import './assets/font-style.css'
+
+library.add(faChevronLeft, faHome)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 connection.sync()
 
