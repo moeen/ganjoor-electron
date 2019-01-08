@@ -11,6 +11,7 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
+    "bulma-rtl": "^0.7.1",
     "sequelize": "^4.42.0",
     "sqlite3": "^4.0.4",
     "vue": "^2.5.21",
