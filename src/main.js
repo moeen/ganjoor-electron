@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 
 import 'bulma-rtl/css/bulma-rtl.css'
+import './assets/font-style.css'
 
 Vue.config.productionTip = false
 
