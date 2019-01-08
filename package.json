@@ -11,6 +11,9 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.12",
+    "@fortawesome/free-solid-svg-icons": "^5.6.3",
+    "@fortawesome/vue-fontawesome": "^0.1.4",
     "bulma-rtl": "^0.7.1",
     "sequelize": "^4.42.0",
     "sqlite3": "^4.0.4",
