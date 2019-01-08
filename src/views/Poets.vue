@@ -21,9 +21,13 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   export default {
     name: 'poets',
-    computed: mapState({ poets: state => state.poetsModule.poets })
+    beforeMount() {
+      this.getAllPoets()
+    },
+    computed: mapState({ poets: state => state.poetsModule.poets }),
+    methods: mapActions(['getAllPoets'])
   }
 </script>
