@@ -6,11 +6,13 @@ const state = {
 
 const actions = {
   getAllPoets ({ commit }) {
+    commit('SET_FETCH', false)
     Models.Poet.findAll({
       raw: true
     })
       .then(res => {
         commit('SET_POETS', res)
+        commit('SET_FETCH', true)
       })
   }
 }

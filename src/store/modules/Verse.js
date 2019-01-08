@@ -6,6 +6,7 @@ const state = {
 
 const actions = {
   getVerses ({ commit }, id) {
+    commit('SET_FETCH', false)
     Models.Verse.findAll({
       where: {
         poem_id: id
@@ -14,6 +15,7 @@ const actions = {
     })
       .then(res => {
         commit('SET_VERSES', res)
+        commit('SET_FETCH', true)
       })
   }
 }

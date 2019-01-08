@@ -7,6 +7,7 @@ const state = {
 
 const actions = {
   getPoems ({ commit }, details) {
+    commit('SET_FETCH', false)
     Models.Poem.findAll({
       where: {
         cat_id: details.id
@@ -15,9 +16,11 @@ const actions = {
     })
       .then(res => {
         commit('SET_POEMS', res)
+        commit('SET_FETCH', true)
       })
   },
   getPoemsCat ({ commit }, details) {
+    commit('SET_FETCH', false)
     Models.Cat.findAll({
       where: {
         poet_id: details.poetId,
@@ -27,6 +30,7 @@ const actions = {
     })
       .then(res => {
         commit('SET_POEMS_CAT', res)
+        commit('SET_FETCH', true)
       })
   }
 }
