@@ -14,7 +14,7 @@
     </section>
     <section class="section">
       <div class="container">
-        <router-view></router-view>
+        <router-view :key="this.$route.fullPath"></router-view>
       </div>
     </section>
   </div>
