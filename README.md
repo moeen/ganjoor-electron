@@ -1,29 +1,24 @@
-# ganjoor-electron
+# GANJOOR-ELECTRON
+
+![screenshot](https://user-images.githubusercontent.com/16473040/52582561-b58ac300-2e42-11e9-800f-541c076a3901.png)
+
+> Cross-platform and free persian poetry app based on Electron and Vue.js.
+
+## About
+Ganjoor-electron is a cross-platform desktop **persian poetry app**. It uses [ganjoor](http://ganjoor.net) database.
 
 ## Project setup
+
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Run and hot-reloads for development
 ```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
+yarn run electron:serve
 ```
 
-### Run your tests
+### Build and minifies for production
 ```
-yarn run test
+yarn run electron:build
 ```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
