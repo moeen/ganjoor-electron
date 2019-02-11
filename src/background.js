@@ -19,8 +19,9 @@ let win
 // Standard scheme must be registered before the app is ready
 protocol.registerStandardSchemes(['app'], { secure: true })
 function createWindow () {
+  const iconPath = path.join(__static, 'logo.png')
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600, minWidth: 700 })
+  win = new BrowserWindow({ width: 800, height: 600, minWidth: 700, icon: iconPath })
 
   connection.sync()
 
