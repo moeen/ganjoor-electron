@@ -5,15 +5,16 @@ import {
   createProtocol,
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
+import decompress from 'decompress'
+import path from 'path'
+import fs from 'fs'
 import { connection } from './database'
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
-
-// Declare __static var
-let __static
 
 // Standard scheme must be registered before the app is ready
 protocol.registerStandardSchemes(['app'], { secure: true })
@@ -38,6 +39,20 @@ function createWindow () {
   })
 }
 
+// Decompress DB from ganjoor.zip if not exists and then run the app
+function decompressAndRun () {
+  const dbAddress = path.join(app.getPath('userData'), 'ganjoor.s3db')
+  if (!fs.existsSync(dbAddress)) {
+    const compressedDB = path.join(__static, 'ganjoor.zip')
+    const userData = app.getPath('userData')
+    decompress(compressedDB, userData).then(files => {
+      createWindow()
+    })
+  } else {
+    createWindow()
+  }
+}
+
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
   // On macOS it is common for applications and their menu bar
@@ -51,7 +66,7 @@ app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (win === null) {
-    createWindow()
+    decompressAndRun()
   }
 })
 
@@ -63,7 +78,7 @@ app.on('ready', async () => {
     // Install Vue Devtools
     await installVueDevtools()
   }
-  createWindow()
+  decompressAndRun()
 })
 
 // Exit cleanly on request from parent process in development mode.
