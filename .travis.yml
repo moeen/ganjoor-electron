@@ -1,0 +1,54 @@
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode9.4
+      language: node_js
+      node_js: "8"
+      env:
+        - ELECTRON_CACHE=$HOME/.cache/electron
+        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+
+    - os: linux
+      services: docker
+      language: generic
+
+cache:
+  directories:
+    - node_modules
+    - $HOME/.cache/electron
+    - $HOME/.cache/electron-builder
+
+script:
+  - |
+    ENVS=`env | grep -iE '^(DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS|APPVEYOR_|CSC_|_TOKEN|_KEY|AWS_|STRIP|BUILD_)([A-Z]|_)*=' | sed -n '/^[^\t]/s/=.*//p' | sed '/^$/d' | sed 's/^/-e /g' | tr '\n' ' '`
+    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      docker run $ENVS --rm \
+        -v ${PWD}:/project \
+        -v ~/.cache/electron:/root/.cache/electron \
+        -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+        electronuserland/builder:wine \
+        /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn run electron:build --linux --win"
+    else
+      yarn run electron:build
+    fi
+
+before_cache:
+  - rm -rf $HOME/.cache/electron-builder/wine
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key: $GH_TOKEN
+  file_glob: true
+  prerelease: true
+  file:
+    - "dist_electron/ganjoor-electron*.zip"
+    - "dist_electron/ganjoor-electron*.dmg"
+    - "dist_electron/ganjoor-electron*.deb"
+    - "dist_electron/ganjoor-electron*.rpm"
+    - "dist_electron/ganjoor-electron*.snap"
+    - "dist_electron/ganjoor-electron*.AppImage"
+    - "dist_electron/ganjoor-electron*.tar.gz"
+    - "dist_electron/ganjoor-electron*.exe"
+  on:
+    tags: true
